@@ -17,6 +17,7 @@ app.get('/', (req, res) => {
 
 app.use('/api/tkdangnhap', require('./routes/tkdangnhap.route'));
 app.use('/api/khachhang', require('./routes/khachhang.route'));
+app.use('/api/nguoinhan', require('./routes/nguoinhan.route'));
 
 app.use((req, res, next) => {
   const err404 = createError(404, 'NOT FOUND');
