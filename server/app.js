@@ -1,8 +1,32 @@
-var express = require("express");
-var app = express();
-app.get("/url", (req, res, next) => {
-    res.json(["Tony","Lisa","Michael","Ginger","Food"]);
-});
-app.listen(3000, () => {
- console.log("Server running on port 3000");
-});
+const express = require('express');
+const morgan = require('morgan');
+const createError = require('http-errors');
+require('express-async-errors');
+
+const app = express();
+
+app.use(morgan('dev'));
+app.use(express.json());
+
+app.get('/', (req, res) => {
+  res.json({
+    msg: 'hello from nodejs express api'
+  });
+})
+
+app.use('/api/tkdangnhap', require('./routes/tkdangnhap.route'));
+
+app.use((req, res, next) => {
+  const err404 = createError(404, 'NOT FOUND');
+  next(err404);
+})
+
+app.use(function (err, req, res, next) {
+  console.error(err.stack);
+  res.status(500).send('View error log on console.');
+})
+
+const PORT = 3000;
+app.listen(PORT, () => {
+  console.log(`API is running at http://localhost:${PORT}`);
+})
