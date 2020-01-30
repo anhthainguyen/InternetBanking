@@ -1,7 +1,10 @@
 import React, { Component } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './Login.css';
-
+import ReCAPTCHA from "react-google-recaptcha";
+function onChange(value) {
+  console.log("Captcha value:", value);
+}
 class Login extends React.Component {
   render() {
     return (
@@ -25,7 +28,10 @@ class Login extends React.Component {
                 <label className="custom-control-label" htmlFor="customCheck1">Remember me</label>
             </div>
         </div>
-
+        <ReCAPTCHA
+          sitekey="6LcLG9QUAAAAANA0qrt1NlyVCZmO5yC6sBvuYVUn"
+          onChange={onChange}
+        />
         <button type="submit" className="btn btn-primary btn-block">Submit</button>
         <p className="forgot-password text-right">
             Forgot <a href="#">password?</a>
