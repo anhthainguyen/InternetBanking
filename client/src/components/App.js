@@ -1,5 +1,5 @@
 import React from 'react';
-
+import { loadReCaptcha } from 'react-recaptcha-google'
 class App extends React.Component {
   render() {
     return (
@@ -7,6 +7,9 @@ class App extends React.Component {
         <h1>Home</h1>
       </div>
     )
+  }
+  componentDidMount() {
+    loadReCaptcha();
   }
 }
 

@@ -1,6 +1,7 @@
 const express = require('express');
 const apModel = require('../models/tkdangnhap.model');
-
+const jwt = require('jsonwebtoken');
+const rndToken = require('rand-token');
 const router = express.Router();
 
 router.get('/', async (req, res, next) => {
