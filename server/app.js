@@ -18,6 +18,12 @@ app.get('/', (req, res) => {
 app.use('/api/tkdangnhap', require('./routes/tkdangnhap.route'));
 app.use('/api/khachhang', require('./routes/khachhang.route'));
 app.use('/api/nguoinhan', require('./routes/nguoinhan.route'));
+app.use('/api/nhacno', require('./routes/nhacno.route'));
+app.use('/api/nhanvien', require('./routes/nhanvien.route'));
+
+app.use('/api/taikhoan', require('./routes/taikhoan.route'));
+app.use('/api/taikhoantietkiem', require('./routes/taikhoantietkiem.route'));
+
 
 app.use((req, res, next) => {
   const err404 = createError(404, 'NOT FOUND');
