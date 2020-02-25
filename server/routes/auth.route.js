@@ -10,8 +10,8 @@ const router = express.Router();
 
 router.post('/', async (req, res) => {
   // req.body = {
-  // 	"idTKDangNhap": 1,
-  // 	"MatKhau": "1"
+  // 	"TenDangNhap": "Thai Quang Khai",
+  // 	"MatKhau": "123"
   // }
   //console.log('req.body');
   const ret = await authModel.login(req.body);
