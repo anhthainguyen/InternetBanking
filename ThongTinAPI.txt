@@ -1,0 +1,78 @@
+get:xem danh sách
+post:thêm
+delete:Xoa
+patch:sửa
+
+auth: dùng để đăng nhập
+post: http://localhost:3000/api/auth trả lại accessToken: token và refreshToken: rfToken
+"accessToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE1ODI2NDQwMTUsImV4cCI6MTU4MzI0NDAxNX0.W6LFNamT_FBhpRjYiB-ipocCYZq_JkmzNaoQKoZjVIs",
+"refreshToken": "2AU9IVdmnyMVoKZydKqxkYNWLPlU2LffZp9sGuYqdQaPOsfW6nCVKUU1rXBIfxSNIuOaLU0BQKL8hgDH"
+
+
+bảng khách hàng:
+xem tất cả khách hàng.
+xem 1 khách hàng: đưa idKhachHang cần xem vào.
+thêm:body là các thông tin bảng khách hàng.
+Xóa: đưa idKhachHang vào để xóa.
+sửa: đưa idKhachHang cần sủa, body là các thông tin khách hàng.
+
+bảng nhân viên:
+xem tất cả nhân viên.
+xem 1 nhân viên: đưa idNhanVien cần xem vào.
+thêm:body là các thông tin bảng nhân viên.
+Xóa: đưa idNhanVien vào để xóa.
+sửa: đưa idNhanVien cần sủa, body là các thông tin nhân viên.
+
+bảng tkdangnhap:idTKDangNhap là idKhachHang, TenDangNhap không trùng.
+xem tất cả tkdangnhap.
+vd:http://localhost:3000/api/tkdangnhap
+xem 1 tkdangnhap: đưa idKhachHang cần xem vào.
+vd:http://localhost:3000/api/tkdangnhap/1
+thêm:body là các thông tin bảng tkdangnhap.
+vd:http://localhost:3000/api/tkdangnhap/add
+{
+	"idTKDangNhap":1,
+	"TenDangNhap":"Thai Khai",
+	"MatKhau":"123"
+}
+Xóa: đưa idTKDangNhap vào để xóa.
+vd:http://localhost:3000/api/tkdangnhap/1
+sửa: đưa idTKDangNhap cần sủa, body là các thông tin tkdangnhap.
+vd:http://localhost:3000/api/tkdangnhap/1
+
+Bảng người nhận
+xem tất cả bảng người nhận.
+xem danh sách người nhận của 1 khách hàng: đưa idKhachHang cần xem vào.
+thêm:body là idKhachHang, SoTaiKhoan, TenGoiNho. Nếu ko tên gợi nhớ thì lấy tên của SoTaiKhoan làm tên gợi nhớ. idNguoiNhan tự tăng.
+Xóa: đưa idNguoiNhan vào để xóa.
+sửa: đưa ididNguoiNhan cần sủa, body là các thông tin người nhận.
+
+bảng nhắc nợ
+xem tất cả bảng nhắc nợ.
+xem danh sách nhắc nợ của 1 khách hàng gửi nhắc nợ: đưa SoTKChuNo cần xem vào.
+xem danh sách nhắc nợ của 1 khách hàng bị gửi nhắc nợ: đưa SoTKNguoiNo cần xem vào.
+thêm:body là các thông tin bảng nhắc nợ. idNhacNo tự tăng.
+Xóa: đưa idNhacNo vào để xóa.
+sửa: đưa idNhacNo cần sủa, body là các thông tin bảng nhắc nợ.
+
+bảng tài khoản tiết kiệm , idTKTietKiem tự tăng
+xem tất cả tài khoản tiết kiệm.
+xem tài khoản tiết kiệm của 1 khách hàng: đưa idKhachHang cần xem vào.
+thêm:body là các thông tin bảng tài khoản tiết kiệm. idTKTietKiem tự tăng
+Xóa: đưa idTKTietKiem vào để xóa.
+sửa: đưa idTKTietKiem cần sủa, body là các thông tin tài khoản tiết kiệm.
+
+bảng giao dịch
+xem tất cả giao dịch.
+xem tất cả các giao dịch của tài khoản gửi đi: đưa SoTaiKhoanG cần xem vào.
+vd: http://localhost:3000/api/giaodich/SoTaiKhoanG/123456789
+xem tất cả các giao dịch của tài khoản nhận: đưa SoTaiKhoanN cần xem vào.
+vd: http://localhost:3000/api/giaodich/SoTaiKhoanN/123456789
+thêm:body là các thông tin bảng giao dịch. idGiaoDich tự tăng
+Xóa: đưa idGiaoDich vào để xóa.
+vd: http://localhost:3000/api/giaodich/1
+sửa: đưa idGiaoDich cần sủa, body là các thông tin tài khoản tiết kiệm.
+xem tất cả các giao dịch từ năm tháng ngày đến từ năm tháng ngày.
+
+
+
