@@ -117,10 +117,13 @@ router.delete('/:id', async(req, res) => {
   // });
 })
 
-router.patch('/patch', (req, res) => {
-  res.json({
-    msg: 'patched'
-  });
+router.patch('/patch', async(req, res) => {
+  if (isNaN(req.params.id)) {
+    throw createError(400, 'Invalid id.');
+  }
+
+  const rs = await apModel.patch(req.params.id, req.body);
+  res.json(rs);
 })
 
 module.exports = router;

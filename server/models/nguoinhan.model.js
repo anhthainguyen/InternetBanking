@@ -7,7 +7,7 @@ module.exports = {
   },
 
   loadById: id => {
-    const sql = `select * from nguoinhan where idNguoiNhan = ${id}`;
+    const sql = `select * from nguoinhan where idKhachHang = ${id}`;
     return db.load(sql);
   },
 

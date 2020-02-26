@@ -12,6 +12,16 @@ module.exports = {
     return db.load(sql);
   },
 
+  loadByTenDN: id => {
+    const sql = `select * from tkdangnhap where TenDangNhap = '${id}'`;
+    return db.load(sql);
+  },
+
+  loadByIdTenDN: (entity) => {
+    const sql = `select * from tkdangnhap where idTKDangNhap = ${entity.idTKDangNhap} and TenDangNhap = '${entity.TenDangNhap}'`;
+    return db.load(sql);
+  },
+
   deleteById: id => {
     const sql = `delete from tkdangnhap where idTKDangNhap = ${id}`;
     return db.load(sql);
@@ -24,10 +34,10 @@ module.exports = {
     return db.add(entity, 'tkdangnhap')
   },
 
-  singleByUserName: userName => db.load(`select * from tkdangnhap where idTKDangNhap = '${userName}'`),
+  singleByTenDangNhap: TenDangNhap => db.load(`select * from tkdangnhap where TenDangNhap = '${TenDangNhap}'`),
   
   patch: (id, entity) => {
-    delete entity.CatID;
-    return db.patch(entity, { CatID: id }, 'tkdangnhap')
+    delete entity.idTKDangNhap;
+    return db.patch(entity, { idTKDangNhap: id }, 'tkdangnhap')
   },
 };

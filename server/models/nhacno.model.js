@@ -11,6 +11,16 @@ module.exports = {
     return db.load(sql);
   },
 
+  loadBySoTKChuNo: SoTKChuNo => {
+    const sql = `select * from nhacno where SoTKChuNo = ${SoTKChuNo}`;
+    return db.load(sql);
+  },
+
+  loadBySoTKNguoiNo: SoTKNguoiNo => {
+    const sql = `select * from nhacno where SoTKNguoiNo = ${SoTKNguoiNo}`;
+    return db.load(sql);
+  },
+
   deleteById: id => {
     const sql = `delete from nhacno where idNhacNo = ${id}`;
     return db.load(sql);

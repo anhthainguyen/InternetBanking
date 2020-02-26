@@ -4,12 +4,12 @@ const tkdangnhapModel = require('./tkdangnhap.model');
 module.exports = {
   login: async entity => {
     // entity = {
-    //   "idTKDangNhap": 1,
+    //   "TenDangNhap": 1,
     //   "MatKhau": "1"
     // }
     // console.log(entity);
-    const rows = await tkdangnhapModel.singleByUserName(entity.idTKDangNhap);
-    // console.log(rows);
+    const rows = await tkdangnhapModel.singleByTenDangNhap(entity.TenDangNhap);
+    console.log(rows);
     if (rows === 0)
       return null;
 

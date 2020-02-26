@@ -122,7 +122,7 @@ router.patch('/:id', async (req, res) => {
     throw createError(400, 'Invalid id.');
   }
 
-  const rs = await categoryModel.patch(req.params.id, req.body);
+  const rs = await apModel.patch(req.params.id, req.body);
   res.json(rs);
 })
 

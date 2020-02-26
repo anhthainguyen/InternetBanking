@@ -76,14 +76,28 @@ router.get('/:id', async (req, res) => {
 
 router.post('/add', async (req, res) => {
   try {
-    const results = await apModel.add(req.body);
-    const ret = {
-      CatID: results.insertId,
-      ...req.body
+    const testid = await apModel.loadById(req.body.idTKDangNhap);
+    const testTenDN = await apModel.loadByTenDN(req.body.TenDangNhap);
+    if(testid.length != 0){
+      return res.status(400).json({
+        err: 'Invalid idTKDangNhap.'
+      });
     }
-    res.status(201).json(ret);
+    else if(testTenDN != 0){
+      return res.status(400).json({
+        err: 'Invalid TenDangNhap.'
+      });
+    }
+    else{
+      const results = await apModel.add(req.body);
+      const ret = {
+        CatID: results.insertId,
+        ...req.body
+      }
+      res.status(201).json(ret);
+    }
   } catch (err) {
-
+    console.log(err);
   }
   // categoryModel.add(req.body)
   //   .then(results => {
@@ -118,10 +132,15 @@ router.delete('/:id', async(req, res) => {
   // });
 })
 
-router.patch('/patch', (req, res) => {
-  res.json({
-    msg: 'patched'
-  });
+router.patch('/:idTKDangNhap', async(req, res) => {
+  // console.log(req.params.idTKDangNhap);
+  // console.log(req.body);
+  if (isNaN(req.params.idTKDangNhap)) {
+    throw createError(400, 'Invalid idTKDangNhap.');
+  }
+
+  const rs = await apModel.patch(req.params.idTKDangNhap, req.body);
+  res.json(rs);
 })
 
 module.exports = router;
