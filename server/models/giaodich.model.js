@@ -29,7 +29,7 @@ module.exports = {
   add: entity => db.add(entity, 'giaodich'),
 
   patch: (id, entity) => {
-    delete entity.CatID;
-    return db.patch(entity, { idkhachhang: id }, 'taikhoan')
+    delete entity.idGiaoDich;
+    return db.patch(entity, { idGiaoDich: id }, 'giaodich')
   },
 };

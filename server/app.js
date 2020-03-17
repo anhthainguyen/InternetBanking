@@ -22,46 +22,59 @@ app.use('/api/auth', require('./routes/auth.route'));
 app.use('/api/tkdangnhap', require('./routes/tkdangnhap.route'));
 
 function verifyAccessToken(req, res, next) {
-  next();
-  // // console.log(req.headers);
-  // const token = req.headers['x-access-token'];
-  // const code = req.headers['code'];
-  // const time = req.headers['time'];
-  // const hash = req.headers['hash'];
-  // const c = code + time;
-  // //next();
+  // next();
+  const token = req.headers['x-access-token'];
+  const code = req.headers['code'];
+  const time = req.headers['time'];
+  const hash = req.headers['hash'];
+  const c = code + time;
   
+  if (token && code && time && hash) {
+    jwt.verify(token, 'shhhhh', function (err, payload) {
+      if (err) throw createError(403, err);
+      const now = moment();
+      const after = now.clone().subtract(30, 'seconds');
+      if (bcrypt.compareSync(c, hash) && after.format('YYYY-MM-DD HH:mm:ss')<time && time < now.format('YYYY-MM-DD HH:mm:ss')) {
+        next();
+      }else {
+        throw createError(401, 'HASH_ERROR');
+      }
+      //console.log(payload);
 
-  // if (token && code && time && hash) {
-  //   jwt.verify(token, 'shhhhh', function (err, payload) {
-  //     if (err) throw createError(403, err);
-  //     const now = moment();
-  //     const after = now.clone().subtract(30, 'seconds');
-  //     if (bcrypt.compareSync(c, hash) && after.format('YYYY-MM-DD HH:mm:ss')<time && time < now.format('YYYY-MM-DD HH:mm:ss')) {
-  //       next();
-  //     }else {
-  //       throw createError(401, 'HASH_ERROR');
-  //     }
-  //     //console.log(payload);
+      //next();
+    });
+  } else {
+    throw createError(401, 'NO_TOKEN OR CODE OR TIME OR HASH');
+  }
+}
 
-  //     //next();
-  //   });
-  // } else {
-  //   throw createError(401, 'NO_TOKEN OR CODE OR TIME OR HASH');
-  // }
-  
-  // const c = entity.code + entity.time;
-  // if (hash) {
-  //   const hash = bcrypt.hashSync(hash, 8);
-  //   if (!bcrypt.compareSync(c, hash)) {
-  //     throw createError(300, 'Saaaaaaaaaaa');
-  //   }
-  //   else{
-  //     throw createError(200, 'TC');
-  //   }
-  // } else {
-  //   throw createError(401, 'NO_HASH');
-  // }
+function verifyAccessPartnerPGP(req, res, next) {
+  // next();
+  const code1 = '1234';
+  const code2 = '2345';
+  const time = req.body.time;
+  const hash = req.body.hash;
+  const code = req.body.code;
+  const c1 = code1 + time;
+  const c2 = code2 + time;
+  if (code && time && hash) {
+    const now = moment();
+    const after = now.clone().subtract(30, 'seconds');
+    if (after.format('YYYY-MM-DD HH:mm:ss')<time && time < now.format('YYYY-MM-DD HH:mm:ss')) {
+      if(bcrypt.compareSync(c1, hash) || bcrypt.compareSync(c2, hash)){
+        next();
+      }
+      else{
+        throw createError(401, 'HASH_ERROR');
+      }
+    }else {
+      throw createError(401, 'TIME_ERROR');
+    }
+    //console.log(payload);
+    //next();
+  } else {
+    throw createError(400, 'NO_CODE OR TIME OR HASH');
+  }
 }
 
 app.use('/api/khachhang', verifyAccessToken, require('./routes/khachhang.route'));
@@ -71,6 +84,9 @@ app.use('/api/nhanvien', verifyAccessToken, require('./routes/nhanvien.route'));
 
 app.use('/api/giaodich', verifyAccessToken, require('./routes/giaodich.route'));
 app.use('/api/taikhoantietkiem', verifyAccessToken, require('./routes/taikhoantietkiem.route'));
+app.use('/api/doisoat', verifyAccessToken, require('./routes/doisoat.route'));
+
+app.use('/api', verifyAccessPartnerPGP, require('./routes/khachhang.route'));
 
 
 app.use((req, res, next) => {
