@@ -76,6 +76,7 @@ router.get('/:id', async (req, res) => {
 
 router.post('/add', async (req, res) => {
   try {
+    console.log(req.body);
     const testid = await apModel.loadById(req.body.idTKDangNhap);
     const testTenDN = await apModel.loadByTenDN(req.body.TenDangNhap);
     if(testid.length != 0){
