@@ -19,7 +19,13 @@ module.exports = {
   add: entity => db.add(entity, 'khachhang'),
 
   patch: (id, entity) => {
-    delete entity.CatID;
+    delete entity.idKhachHang;
     return db.patch(entity, { idKhachHang: id }, 'tkdangnhap')
   },
+
+  loadBySoTaiKhoan: SoTaiKhoan => {
+    const sql = `select * from khachhang where SoTaiKhoan = ${SoTaiKhoan}`;
+    return db.load(sql);
+  },
+
 };
