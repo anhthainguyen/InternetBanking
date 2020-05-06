@@ -12,14 +12,23 @@ const app = express();
 app.use(morgan('dev'));
 app.use(express.json());
 
+app.use(function(req, res, next) {
+  res.header("Access-Control-Allow-Origin", "http://localhost:3000"); // update to match the domain you will make the request from
+  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+  next();
+});
+
 app.get('/',(req, res) => {
-  res.json({
+  req.json({
     msg: 'hello from nodejs express api'
   });
 })
 
+
 app.use('/api/auth', require('./routes/auth.route'));
 app.use('/api/tkdangnhap', require('./routes/tkdangnhap.route'));
+app.use('/api/khachhang', require('./routes/khachhang.route'));
+app.use('/api/taikhoantietkiem', require('./routes/taikhoantietkiem.route'));
 
 function verifyAccessToken(req, res, next) {
   // next();
@@ -103,7 +112,7 @@ app.use(function (err, req, res, next) {
 })
 
 
-const PORT = 3000;
+const PORT = 4200;
 app.listen(PORT, () => {
   console.log(`API is running at http://localhost:${PORT}`);
 })

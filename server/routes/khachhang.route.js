@@ -5,7 +5,6 @@ const router = express.Router();
 
 router.get('/', async (req, res, next) => {
   // throw new Error('An error occurred');
-
   // try {
   const rows = await apModel.all();
   // throw new Error('An async/await-error occurred');
