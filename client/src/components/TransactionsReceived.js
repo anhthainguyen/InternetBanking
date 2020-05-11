@@ -2,37 +2,38 @@ import React, { Component } from 'react';
 import axios from 'axios';
 //import CallApi from '../utils/ApiCaller';
 
-class SavingAccount extends Component {
-
+class TransactionsReceived extends Component {
     constructor(props) {
         super(props);
         this.state = { users: [] };
     }
-    
     componentDidMount() {
-        //var id = 2
+        //var id = 123456789
         axios({
             method: 'GET',
-            url: 'http://localhost:4200/api/taikhoantietkiem',
+            url: 'http://localhost:4200/api/giaodich/SoTaiKhoanN/123456789',
             data: null
 
         }).then(res => {
-            //console.log(res);
+            console.log(res);
             this.setState({ users: res.data });
         }).catch(err => {
             console.log(err);
         });
-        // CallApi('taikhoantietkiem/' + id, 'GET', null).then(res => {
+        // CallApi('giaodich/SoTaiKhoanG/123456789', 'GET', null).then(res => {
         //     console.log(res);
         //     this.setState({ users: res.data });
         // });
     }
 
-    renderSavingAccount = () => {
+    renderTransactionsReceived = () => {
         let users = this.state.users.map((data, index) =>
-            <tr key={data.idTKTietKiem}>
-                <td>{data.TenTaiKhoan}</td>
+            <tr key={data.idGiaoDich}>
+                <td>{data.SoTaiKhoanG}</td>
+                <td>{data.NganHang}</td>
                 <td>{data.SoTien}</td>
+                <td>{data.NoiDung}</td>
+                <td>{data.NgayGio}</td>
             </tr>
         );
         return users;
@@ -41,16 +42,19 @@ class SavingAccount extends Component {
     render() {
         return (
             <div className="container">
-                <h3>TÀI KHOẢN TIẾT KIỆM</h3>
+                <h1>CÁC GIAO DỊCH NHẬN TIỀN</h1>
                 <table className="table">
                     <thead className="thead-dark">
                         <tr>
-                            <th scope="col">Tên tài Khoản</th>
+                            <th scope="col">Số tài Khoản Gửi</th>
+                            <th scope="col">Ngân hàng</th>
                             <th scope="col">Số Tiền</th>
+                            <th scope="col">Nội dung</th>
+                            <th scope="col">Ngày giờ</th>
                         </tr>
                     </thead>
                     <tbody>
-                        {this.renderSavingAccount()}
+                        {this.renderTransactionsReceived()}
                     </tbody>
                 </table>
             </div>
@@ -58,4 +62,4 @@ class SavingAccount extends Component {
     }
 }
 
-export default SavingAccount;
+export default TransactionsReceived;

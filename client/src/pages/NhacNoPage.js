@@ -1,10 +1,13 @@
 import React from 'react';
+import CreateDebtReminder from '../components/CreateDebtReminder';
+import SeeDebtList from '../components/SeeDebtList';
 
 class NhacNoPage extends React.Component {
   render() {
     return (
       <div>
-        <h1>Nhắc nợ</h1>
+        <CreateDebtReminder/>
+        <SeeDebtList/>
       </div>
     )
   }

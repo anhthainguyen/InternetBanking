@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import axios from 'axios';
+import './Menu.css'
 //import CallApi from '../utils/ApiCaller';
 
 class UserInformation extends Component {
@@ -15,16 +16,13 @@ class UserInformation extends Component {
             data: null
 
         }).then(res => {
-            console.log(res);
+            //console.log(res);
             this.setState({ users: res.data });
         }).catch(err => {
             console.log(err);
         });
         // CallApi('khachhang/' + id, 'GET', null).then(res => {
         //     console.log(res);
-        //     this.setState({ users: res.data });
-        // });
-        // CallApi('khachhang/' + id, 'GET', null).then(res => {
         //     this.setState({ users: res.data });
         // });
     }
@@ -107,7 +105,7 @@ class UserInformation extends Component {
             //     </tbody>
             // </table>
 
-            <div>
+            <div className="con mg-10">
                 <h1>THÔNG TIN TÀI KHOẢN</h1>
                 <table className="table">
                     <thead className="thead-dark">

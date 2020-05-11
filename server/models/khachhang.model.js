@@ -20,7 +20,7 @@ module.exports = {
 
   patch: (id, entity) => {
     delete entity.idKhachHang;
-    return db.patch(entity, { idKhachHang: id }, 'tkdangnhap')
+    return db.patch(entity, { idKhachHang: id }, 'khachhang')
   },
 
   loadBySoTaiKhoan: SoTaiKhoan => {

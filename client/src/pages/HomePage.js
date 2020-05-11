@@ -7,7 +7,6 @@ class HomePage extends React.Component {
     return (
       <div>
         <UserInformation/>
-        <h3>TÀI KHOẢN TIẾT KIỆM</h3>
         <SavingAccount/>
       </div>
     )

@@ -29,6 +29,8 @@ app.use('/api/auth', require('./routes/auth.route'));
 app.use('/api/tkdangnhap', require('./routes/tkdangnhap.route'));
 app.use('/api/khachhang', require('./routes/khachhang.route'));
 app.use('/api/taikhoantietkiem', require('./routes/taikhoantietkiem.route'));
+app.use('/api/giaodich', require('./routes/giaodich.route'));
+app.use('/api/nhacno', require('./routes/nhacno.route'));
 
 function verifyAccessToken(req, res, next) {
   // next();

@@ -1,0 +1,139 @@
+1)
+Url: 'host:port/api/information' method POST
+req.body.code;//Code 1234
+req.body.time;//Định dạng ngày giờ: YYYY-MM-DD HH:mm:ss VD:'2020-02-25 22:59:01', thời gian trể không quá 30s.
+req.body.hash;//hash là code + time dùng bcrypt. DV:'12342020-02-25 22:59:01'
+req.body.SoTaiKhoan;//Số tài khoảng cần lấy thông tin.
+trả về: HoVaTen, SoTaiKhoan.
+
+Nếu không có code or time or hash
+trả về : 400, 'NO_CODE OR TIME OR HASH'
+
+Nếu time quá 30s
+trả về : 401, 'TIME_ERROR'
+
+Nếu hash sai
+trả về : 401, 'HASH_ERROR'
+
+Nếu không có SoTaiKhoan
+trả về : 404, 'NO_SoTaiKhoan'
+
+2)
+Url: 'host:port/api/plus' method POST, cộng tiền vào số tài khoản nhận
+req.body.code;
+req.body.time;
+req.body.hash;//hash là code + time dùng bcrypt.
+req.body.encryp;
+req.body.data;//có dạng
+-----BEGIN PGP MESSAGE-----
+Version: OpenPGP.js v4.10.1
+Comment: https://openpgpjs.org
+
+wYwD62nXyAnbKBoBBACeP/BFEqx0i0PqNrVPLgFcMjc5M3zqJVnp/TDCzSZE
+nynpCt75qKhSTppBdhfPy2+Q4IElg9FoQxDcg0PxLeRUL4OuzjU/iv4fNCr6
+Ln24Xw8ZufWNYmosqDv1NEehSUi/I5OT3bKxxTUv7dBThoz/WdKV7ooqVnhz
+P9K7Egh8YNLAhwG435vs2r2Zk7Ar3U+ozREYLcSQpRgbWdi+czl+aIpZ4INQ
+MTe0dPBGc+yKYENTKLxVtSEBkwXVn3370J7VX3UDSuwvYY8VomLMLlWO78EB
+uFBPwFASytjJRI+Mb26zkb0Wv2Gqy9q5hH5yhl3s7GatBdFDDkvCT8EKQ605
+EiN7pEktipX+RsXHO1c/O86+Rh2XfF4TNNiy9WziRXVzIMXrB8TN8WDQDwNi
+7/4cTvrWgEkyiUkWK055GJbYL1VLwKnXQMA6VDk3t+Vbq5tEpSFUWyLNLnBj
+evfkdseFa07hHCxYP9RLgp2e5OwquKo0QsvBaf8yX2RIJM9Ki/hkK0cOu8v+
+4t+VAG7P3jn5f4j8Q64x9D8RwW3cKeD/rwLHbCPWHG2a12yDwQm4wIOIjr/2
+pAT6X4RcdyyHjsYdKKkso7QwtwtGFw==
+=gLeo
+-----END PGP MESSAGE-----
+Tạo req.body.data:
+
+const publicKeyArmored = '-----BEGIN PGP PUBLIC KEY BLOCK-----\n'+
+'Version: Keybase OpenPGP v1.0.0\n'+
+'Comment: https://keybase.io/crypto\n'+
+'\n'+
+'xo0EXljz3AEEALn+1n5uVVdblwD8kiYK1zDqkerRaispaPm8YdkZS6iTwiY71OCA\n'+
+'CadHB6HO8WMx8OpEqEYtbQIXlQPj2QIm/DA9xHdtX2/gxd577IyJwnywETTkpUsR\n'+
+'+di0HmsbNhzgDsB+LgGOyB9WXFJRexZh0la67ddDjHZPB0XyEzzj2FevABEBAAHN\n'+
+'KFRow6FpIFF1YW5nIEto4bqjaSA8dm50aGFpMDg0QGdtYWlsLmNvbT7CrQQTAQoA\n'+
+'FwUCXljz3AIbLwMLCQcDFQoIAh4BAheAAAoJEGOs9+6JF/kw7u8EAJPkji7h8yBp\n'+
+'dOaYsoByrYJmvfKBCAreTrpHM+hzx+VgAQHYlqgSu6MGCX/zoxVvOE24LpBzM0eF\n'+
+'ZpQuhFcyiQ53VHgAIb0MYPwv3nU35q7M4D2TGGwpAGRihcB8xHwuM0s885+CC/gE\n'+
+'8zM7VMqbF3J92V18nSbLn/awA9UsqvPfzo0EXljz3AEEALtUSJg3Q/aTeMS4gvT3\n'+
+'aChOBLuGXowuoLBKzVINlMFb8LO3+wMkLVal9QBFb3/SmSw58VMXEa7cIx7Q7hWI\n'+
+'zkwGC3kP4OzjSp4Q303Z67bFwTCmhcjKYyBAjXalyx0w8P+wIwQctNOrhYVjY6sr\n'+
+'+P6ze60G4FLy9fZBgcHqgOZdABEBAAHCwIMEGAEKAA8FAl5Y89wFCQ8JnAACGy4A\n'+
+'qAkQY6z37okX+TCdIAQZAQoABgUCXljz3AAKCRDradfICdsoGkL5A/9M5vUgoI8O\n'+
+'i84wMK4le7pqa8lVYQBI8Us5YwVRRKkVGJ8duodrJMGH11RMnd1DxI9WN4kOXADu\n'+
+'er/1nJ4HGyLir5aQWAUcrJimtR0sCGl+dqo+VczKiou18exlMA543nTWljePX7ML\n'+
+'tcKCXhNlYYBQB84JWoL1rsmcNtBqxwKVOW5SA/9GQm9pnCyTohsl8UgEQv/6LmOh\n'+
+'vUdXuxe0RhtOf7YXiB5X5oi2fw3zBI2AjoEzbP+AdtZt/objBZBSnHg6MS6KP2fj\n'+
+'+R+WBRpjbMHawjWG7fktsucYKCqyVSRBSuhl9ye14rY/HDjmajc01lmCPqGOv9cO\n'+
+'PP4zFaC8TChZ5BnEAc6NBF5Y89wBBACap5ILSVKUJ3rDgktlCxbLyN5vSrpKqCKo\n'+
+'MR1UAfArQs1NfcpTvtb+aWmLEVLbjjIaoFTqbvu88WGhPOyNMkWHT4+BD15wYH9M\n'+
+'doHa2mrsCy6ySvyRF9FrUBRzLFm2oaDd2gbCTboX58kA9iaNwtf8SziWc2XLc0KJ\n'+
+'W32aQ7Hz5QARAQABwsCDBBgBCgAPBQJeWPPcBQkPCZwAAhsuAKgJEGOs9+6JF/kw\n'+
+'nSAEGQEKAAYFAl5Y89wACgkQ+dV9aGsC5zk1uQP+KA6QzB+ikAQG7bu9g9w7SkfD\n'+
+'JBvtWC7csl/ekroWz4s6yyCGdUtqb21GhlP5MNkpTeHeyO8lZKVBiqi9J3sr3Ppc\n'+
+'D6mAWl31v+XLc5t3N/+lQPT3PhZKsFBVUGZBNW2fVQarybv8+JIxxExnUbpYVf7c\n'+
+'txuRuQFfymqlOUTDl8AkkwP/XkL+ZmJr6FbqI0q8jpXldLTbijl9GegJOIG9nwC5\n'+
+'v92UGIimlBfBDAudHoJ0QxEuHM5RfXIbgPTN357iZn9U2Odd9f9ZLvXzYTVbGq2P\n'+
+'2pdMh9zcZE76ReQmG6jwxSwz1hX0RjbC1c39vR/LGY904enGocJB1tLqKBA7pYH+\n'+
+'qzA=\n'+
+'=5NOK\n'+
+'-----END PGP PUBLIC KEY BLOCK-----';
+
+const data = {
+	"SoTaiKhoanG":"234567890",//Bên gửi API trừ tiền số tài khoản gửi
+	"SoTaiKhoanN":"123456789",//Bên nhận API cộng tiền vào số tài khoản nhận
+	"NganHang":"___",//Tên ngân hàng gửi API
+	"SoTien":"100",//đơn vị VND
+	"NgayGio":"2020-02-25 22:59:01"//Định dạng ngày giờ: YYYY-MM-DD HH:mm:ss
+};
+
+const myObjStr = JSON.stringify(data);
+
+const { data: encrypted } = await openpgp.encrypt({
+  message: openpgp.message.fromText(myObjStr),                 // input as Message object
+  publicKeys: (await openpgp.key.readArmored(publicKeyArmored)).keys, // for encryption
+  privateKeys: [privateKey]                                           // for signing (optional)
+});
+
+encrypted là dữ liệu của req.body.data.
+
+
+code, hash, time như API 1.
+Nếu sai encryp
+trả về: 401, 'ENCRYP_ERROR'
+
+Nếu SoTaiKhoanN không có
+trả về : 404, 'NO_SoTaiKhoanN'
+
+Nếu thành công sẽ trả về req.body mà bạn gửi qua
+
+
+
+3)
+Url: 'host:port/api/minus' method POST, trừ tiền vào số tài khoản gửi 
+dữ liệu gửi qua như API 2.
+code, hash, time như API 1.
+Nếu sai encryp
+trả về: 401, 'ENCRYP_ERROR'
+
+Nếu SoTaiKhoanG không có
+trả về : 404, 'NO_SoTaiKhoanG'
+
+Nếu SoTaiKhoanG không đủ tiền để trừ
+trả về : 501, 'The amount is not enough to deduct.'
+
+Nếu thành công sẽ trả về req.body mà bạn gửi qua
+
+thuật toán hash dùng : bcrypt
+cách tạo ra hash:
+VD:
+const bcrypt = require('bcryptjs');
+const code = '1234';
+const time = '2020-02-25 22:59:01';
+const c = code + time;
+const hash = bcrypt.hashSync(c, 8);
+
+có thể dùng để định dạng thời giang:
+const moment = require('moment');
+const now = moment().format("YYYY-MM-DD HH:mm:ss");
+ 

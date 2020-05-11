@@ -1,5 +1,6 @@
 const express = require('express');
-const apModel = require('../models/giaodich.model');
+const giaodichModel = require('../models/giaodich.model');
+const khachhangModel = require('../models/khachhang.model');
 
 const router = express.Router();
 
@@ -7,7 +8,7 @@ router.get('/', async (req, res, next) => {
   // throw new Error('An error occurred');
 
   // try {
-  const rows = await apModel.all();
+  const rows = await giaodichModel.all();
   // throw new Error('An async/await-error occurred');
   res.json(rows);
   // } catch (err) {
@@ -43,7 +44,7 @@ router.get('/SoTaiKhoanG/:SoTaiKhoanG', async (req, res) => {
 
   const SoTaiKhoanG = req.params.SoTaiKhoanG || -1;
   try {
-    const rows = await apModel.loadBySoTaiKhoanG(SoTaiKhoanG);
+    const rows = await giaodichModel.loadBySoTaiKhoanG(SoTaiKhoanG);
     if (rows.length === 0) {
       res.status(204).end();
     } else {
@@ -65,7 +66,7 @@ router.get('/SoTaiKhoanN/:SoTaiKhoanN', async (req, res) => {
   
     const SoTaiKhoanN = req.params.SoTaiKhoanN || -1;
     try {
-      const rows = await apModel.loadBySoTaiKhoanN(SoTaiKhoanN);
+      const rows = await giaodichModel.loadBySoTaiKhoanN(SoTaiKhoanN);
       if (rows.length === 0) {
         res.status(204).end();
       } else {
@@ -80,14 +81,40 @@ router.get('/SoTaiKhoanN/:SoTaiKhoanN', async (req, res) => {
 
 router.post('/add', async (req, res) => {
   try {
-    const results = await apModel.add(req.body);
-    console.log('1');
+    const rowsG = await khachhangModel.loadBySoTaiKhoan(req.body.SoTaiKhoanG);
+    if (rowsG.length === 0) {
+      return res.status(404).json({ error: 'NO_SoTaiKhoanG'})
+    }
+    const rowsN = await khachhangModel.loadBySoTaiKhoan(req.body.SoTaiKhoanN);
+    if (rowsN.length === 0) {
+      return res.status(404).json({ error: 'NO_SoTaiKhoanN'})
+    }
+
+    const rowsG1=rowsG;
+    rowsG[0].SoTien=Number(rowsG[0].SoTien) - Number(req.body.SoTien);
+    if(rowsG[0].SoTien <= 0){
+      return res.status(501).send('Not enough money to transfer.');
+    }
+    const rsG = await khachhangModel.patch(rowsG[0].idKhachHang, rowsG[0]);
+    if(rsG.length === 0){
+      return res.status(500).send('View error log on console.');
+    }
+
+    rowsN[0].SoTien=Number(rowsN[0].SoTien) + Number(req.body.SoTien);
+    const rsN = await khachhangModel.patch(rowsN[0].idKhachHang, rowsN[0]);
+    if(rsN.length === 0){
+      await khachhangModel.patch(rowsG1[0].idKhachHang, rowsG1[0]);
+      return res.status(500).send('View error log on console.');
+    }
+    const rows2=await giaodichModel.add(req.body);
+    if(rows2.length === 0){
+      return res.status(500).send('View error log on console.');
+    }
     const ret = {
-      CatID: results.insertId,
+      CatID: rows2.insertId,
       ...req.body
     }
-    res.status(201).json(ret);
-    console.log('err');
+    return res.status(201).json(ret);;
   } catch (err) {
     console.log(err);
     res.status(500);
@@ -112,7 +139,7 @@ router.delete('/:id', async(req, res) => {
 
   const id = req.params.id || -1;
   try {
-    await apModel.deleteById(id);
+    await giaodichModel.deleteById(id);
     res.json({
       msg: 'finish'
     });
@@ -131,7 +158,7 @@ router.patch('/:id', async (req, res) => {
     throw createError(400, 'Invalid id.');
   }
 
-  const rs = await apModel.patch(req.params.id, req.body);
+  const rs = await giaodichModel.patch(req.params.id, req.body);
   res.json(rs);
 })
 

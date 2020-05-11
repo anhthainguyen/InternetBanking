@@ -9,6 +9,7 @@ router.get('/', async (req, res, next) => {
 })
 
 router.get('/SoTKChuNo/:SoTKChuNo', async (req, res) => {
+
   if (isNaN(req.params.SoTKChuNo)) {
     return res.status(400).json({
       err: 'Invalid id.'
@@ -19,6 +20,7 @@ router.get('/SoTKChuNo/:SoTKChuNo', async (req, res) => {
   try {
     const rows = await apModel.loadBySoTKChuNo(SoTKChuNo);
     if (rows.length === 0) {
+      res.json(rows)
       res.status(204).end();
     } else {
       res.json(rows);
@@ -31,7 +33,7 @@ router.get('/SoTKChuNo/:SoTKChuNo', async (req, res) => {
 })
 
 router.get('/SoTKNguoiNo/:SoTKNguoiNo', async (req, res) => {
-  if (isNaN(req.params.id)) {
+  if (isNaN(req.params.SoTKNguoiNo)) {
     return res.status(400).json({
       err: 'Invalid id.'
     });
@@ -39,8 +41,9 @@ router.get('/SoTKNguoiNo/:SoTKNguoiNo', async (req, res) => {
 
   const SoTKNguoiNo = req.params.SoTKNguoiNo || -1;
   try {
-    const rows = await apModel.loadById(SoTKNguoiNo);
+    const rows = await apModel.loadBySoTKNguoiNo(SoTKNguoiNo);
     if (rows.length === 0) {
+      res.json(rows)
       res.status(204).end();
     } else {
       res.json(rows);

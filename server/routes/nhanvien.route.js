@@ -51,7 +51,7 @@ router.get('/:id', async (req, res) => {
     if (rows.length === 0) {
       res.status(204).end();
     } else {
-      res.json(rows[0]);
+      res.json(rows);
     }
   } catch (err) {
     console.log(err);

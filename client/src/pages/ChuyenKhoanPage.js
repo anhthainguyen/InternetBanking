@@ -1,10 +1,11 @@
 import React from 'react';
+import Transfer from '../components/Transfer';
 
 class ChuyenKhoanPage extends React.Component {
   render() {
     return (
       <div>
-        <h1>Chuyển khoản</h1>
+        <Transfer/>
       </div>
     )
   }

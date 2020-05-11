@@ -1,19 +1,18 @@
 import React, { Component } from 'react';
 import axios from 'axios';
-//import CallApi from '../utils/ApiCaller';
 
-class SavingAccount extends Component {
+class SeeDebtList extends Component {
 
     constructor(props) {
         super(props);
         this.state = { users: [] };
     }
-    
+
     componentDidMount() {
-        //var id = 2
+        //var id = SoTKNguoiNo
         axios({
             method: 'GET',
-            url: 'http://localhost:4200/api/taikhoantietkiem',
+            url: 'http://localhost:4200/api/nhacno/SoTKNguoiNo/234567890',
             data: null
 
         }).then(res => {
@@ -22,7 +21,7 @@ class SavingAccount extends Component {
         }).catch(err => {
             console.log(err);
         });
-        // CallApi('taikhoantietkiem/' + id, 'GET', null).then(res => {
+        // CallApi('nhacno/SoTKNguoiNo/' + id, 'GET', null).then(res => {
         //     console.log(res);
         //     this.setState({ users: res.data });
         // });
@@ -30,9 +29,12 @@ class SavingAccount extends Component {
 
     renderSavingAccount = () => {
         let users = this.state.users.map((data, index) =>
-            <tr key={data.idTKTietKiem}>
-                <td>{data.TenTaiKhoan}</td>
+            <tr key={data.idNhacNo}>
+                <td>{data.SoTKChuNo}</td>
                 <td>{data.SoTien}</td>
+                <td>{data.NoiDungNo}</td>
+                <td>{data.DaThanhToan}</td>
+                <td>{data.NDXoaNo}</td>
             </tr>
         );
         return users;
@@ -40,13 +42,16 @@ class SavingAccount extends Component {
 
     render() {
         return (
-            <div className="container">
-                <h3>TÀI KHOẢN TIẾT KIỆM</h3>
+            <div>
+                <h3>DANH SÁCH NHẮC NỢ</h3>
                 <table className="table">
                     <thead className="thead-dark">
                         <tr>
-                            <th scope="col">Tên tài Khoản</th>
+                            <th scope="col">Số tài Khoản chủ nợ</th>
                             <th scope="col">Số Tiền</th>
+                            <th scope="col">Nội dung nợ</th>
+                            <th scope="col">Đã Thanh toán</th>
+                            <th scope="col">Nội dung xóa nợ</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -58,4 +63,4 @@ class SavingAccount extends Component {
     }
 }
 
-export default SavingAccount;
+export default SeeDebtList;

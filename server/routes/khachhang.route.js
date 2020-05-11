@@ -1,12 +1,13 @@
 const express = require('express');
-const apModel = require('../models/khachhang.model');
+const khachhangModel = require('../models/khachhang.model');
+const giaodichModel = require('../models/giaodich.model');
 
 const router = express.Router();
 
 router.get('/', async (req, res, next) => {
   // throw new Error('An error occurred');
   // try {
-  const rows = await apModel.all();
+  const rows = await khachhangModel.all();
   // throw new Error('An async/await-error occurred');
   res.json(rows);
   // } catch (err) {
@@ -46,11 +47,11 @@ router.get('/:id', async (req, res) => {
 
   const id = req.params.id || -1;
   try {
-    const rows = await apModel.loadById(id);
+    const rows = await khachhangModel.loadById(id);
     if (rows.length === 0) {
       res.status(204).end();
     } else {
-      res.json(rows[0]);
+      res.json(rows);
     }
   } catch (err) {
     console.log(err);
@@ -74,7 +75,7 @@ router.get('/:id', async (req, res) => {
 
 router.post('/add', async (req, res) => {
   try {
-    const results = await apModel.add(req.body);
+    const results = await khachhangModel.add(req.body);
     const ret = {
       CatID: results.insertId,
       ...req.body
@@ -102,7 +103,7 @@ router.delete('/:id', async(req, res) => {
 
   const id = req.params.id || -1;
   try {
-    await apModel.deleteById(id);
+    await khachhangModel.deleteById(id);
     res.json({
       msg: 'finish'
     });
@@ -121,7 +122,7 @@ router.patch('/patch', async(req, res) => {
     throw createError(400, 'Invalid id.');
   }
 
-  const rs = await apModel.patch(req.params.id, req.body);
+  const rs = await khachhangModel.patch(req.params.id, req.body);
   res.json(rs);
 })
 
@@ -132,7 +133,7 @@ router.post('/information', async (req, res) => {
     });
   }
   try {
-    const rows = await apModel.loadBySoTaiKhoan(req.body.SoTaiKhoan);
+    const rows = await khachhangModel.loadBySoTaiKhoan(req.body.SoTaiKhoan);
     if (rows.length === 0) {
       return res.status(404).json({ error: 'NO_SoTaiKhoan'})
     }
@@ -140,7 +141,7 @@ router.post('/information', async (req, res) => {
     delete rows[0].SoTien;
     delete rows[0].Email;
     delete rows[0].SDT;
-    res.json(rows[0]);
+    res.json(rows);
   } catch (err) {
     console.log(err);
     res.status(500);
@@ -252,19 +253,19 @@ router.post('/plus', async(req, res) => {
       privateKeys: [privateKey]                                           // for decryption
     });
     data = JSON.parse(decrypted);
-    const rows = await apModel.loadBySoTaiKhoan(data.SoTaiKhoanN);
+    const rows = await khachhangModel.loadBySoTaiKhoan(data.SoTaiKhoanN);
     if (rows.length === 0) {
       return res.status(404).json({ error: 'NO_SoTaiKhoanN'})
     }
     const rows3 = rows;
     rows[0].SoTien=Number(rows[0].SoTien) + Number(req.body.SoTien);
-    const rs = await apModel.patch(rows[0].idKhachHang, rows[0]);
+    const rs = await khachhangModel.patch(rows[0].idKhachHang, rows[0]);
     if(rs.length === 0){
       return res.status(500).send('View error log on console.');
     }
     const rows2=await giaodichModel.add(data);
     if(rows2.length === 0){
-      await apModel.patch(rows3[0].idKhachHang, rows3[0]);
+      await khachhangModel.patch(rows3[0].idKhachHang, rows3[0]);
       return res.status(500).send('View error log on console.');
     }
     res.json(req.body);
@@ -343,7 +344,7 @@ router.post('/minus', async(req, res) => {
       privateKeys: [privateKey]                                           // for decryption
     });
     data = JSON.parse(decrypted);
-    const rows = await apModel.loadBySoTaiKhoan(data.SoTaiKhoanG);
+    const rows = await khachhangModel.loadBySoTaiKhoan(data.SoTaiKhoanG);
     if (rows.length === 0) {
       return res.status(404).json({ error: 'NO_SoTaiKhoanG'})
     }
@@ -352,13 +353,13 @@ router.post('/minus', async(req, res) => {
     if(rows[0].SoTien<0){
       return res.status(501).json({ error: 'The amount is not enough to deduct'});
     }
-    const rs = await apModel.patch(rows[0].idKhachHang, rows[0]);
+    const rs = await khachhangModel.patch(rows[0].idKhachHang, rows[0]);
     if(rs.length=== 0){
       return res.status(500).send('View error log on console.');
     }
     const rows2=await giaodichModel.add(req.body);
     if(rows2.length === 0){
-      await apModel.patch(rows3[0].idKhachHang, rows3[0]);
+      await khachhangModel.patch(rows3[0].idKhachHang, rows3[0]);
       return res.status(500).send('View error log on console.');
     }
     res.json(req.body);
