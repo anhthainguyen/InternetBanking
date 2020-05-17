@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import axios from 'axios';
-//import CallApi from '../utils/ApiCaller';
+//import axios from 'axios';
+import CallApi from '../utils/ApiCaller';
 
 class SavingAccount extends Component {
 
@@ -11,21 +11,25 @@ class SavingAccount extends Component {
     
     componentDidMount() {
         //var id = 2
-        axios({
-            method: 'GET',
-            url: 'http://localhost:4200/api/taikhoantietkiem',
-            data: null
+        // axios({
+        //     method: 'GET',
+        //     url: 'http://localhost:4200/api/taikhoantietkiem',
+        //     data: null
 
-        }).then(res => {
-            //console.log(res);
-            this.setState({ users: res.data });
-        }).catch(err => {
-            console.log(err);
-        });
-        // CallApi('taikhoantietkiem/' + id, 'GET', null).then(res => {
-        //     console.log(res);
+        // }).then(res => {
+        //     //console.log(res);
         //     this.setState({ users: res.data });
+        // }).catch(err => {
+        //     console.log(err);
         // });
+        if(this.props.id)
+        {
+            CallApi('taikhoantietkiem/' + this.props.id , 'GET', null).then(res => {
+                console.log(res);
+                this.setState({ users: res.data });
+            });
+        }
+        
     }
 
     renderSavingAccount = () => {

@@ -1,30 +1,46 @@
 import React, { Component } from 'react';
-import axios from 'axios';
+// import axios from 'axios';
 import './Menu.css'
-//import CallApi from '../utils/ApiCaller';
+import CallApi from '../utils/ApiCaller';
 
 class UserInformation extends Component {
     constructor(props) {
         super(props);
         this.state = { users: [] };
     }
-    componentDidMount() {
-        //var id = 2
-        axios({
-            method: 'GET',
-            url: 'http://localhost:4200/api/khachhang',
-            data: null
 
-        }).then(res => {
-            //console.log(res);
-            this.setState({ users: res.data });
-        }).catch(err => {
-            console.log(err);
-        });
-        // CallApi('khachhang/' + id, 'GET', null).then(res => {
-        //     console.log(res);
+
+
+    componentDidMount() {
+        //console.log(this.props.id)
+        //var id = 
+        // axios({
+        //     method: 'GET',
+        //     url: 'http://localhost:4200/api/khachhang',
+        //     data: null
+
+        // }).then(res => {
+        //     //console.log(res);
         //     this.setState({ users: res.data });
+        // }).catch(err => {
+        //     console.log(err);
         // });
+        if(this.props.id)
+        {
+            CallApi('khachhang/' + this.props.id, 'GET', null).then(res => {
+                // console.log(res)
+                // console.log(res.data)
+                // console.log(res.data[0].SoTaiKhoan)
+                // console.log(res.status)
+                if(res.status)
+                {
+                    this.props.onSoTaiKhoan(res.data[0].SoTaiKhoan)
+                    this.setState({ users: res.data });
+                }
+                
+            });
+        }
+        
     }
 
     renderUsers = () => {

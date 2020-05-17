@@ -1,4 +1,5 @@
 import React from 'react';
+import './Menu.css';
 // import 'bootstrap/dist/css/bootstrap.min.css';
 // import Navbar from 'react-bootstrap/Navbar';
 // import Nav from 'react-bootstrap/Nav';
@@ -14,7 +15,7 @@ import React from 'react';
 //import { BrowserRouter as Router } from 'react-router-dom'; 
 import {
   //Router,
-  Link,
+  NavLink,
   //HashRouter
 } from "react-router-dom";
 // import Home from "./Home";
@@ -22,7 +23,9 @@ import {
 // import GiaoDich from "./GiaoDich";
 // import NhacNo from "./NhacNo";
 
+
 class Menu extends React.Component {
+  
   render() {
     return (
       // <nav className="navbar navbar-expand-lg navbar-light bg-light">
@@ -116,20 +119,26 @@ class Menu extends React.Component {
       // </Navbar>
 
       <div className="navbar navbar-default">
-        <Link className="navbar-brand" to='/'>AKBank</Link>
+        <NavLink  className="navbar-brand" to='/home'>AKBank</NavLink >
         <ul className="nav navbar-nav">
-          <li className="active">
-            <Link to="/" >Home</Link>
+          <li>
+            <NavLink  to="/home" activeStyle={{ fontWeight: "bold", color: "blue" }}>Home</NavLink >
           </li>
           <li>
-            <Link to="/chuyekhoan" >Chuyển khoản</Link>
+            <NavLink  to="/chuyekhoan" activeStyle={{ fontWeight: "bold", color: "blue" }}>Chuyển khoản</NavLink >
           </li>
           <li>
-            <Link to="/giaodich" >Giao dịch</Link>
+            <NavLink  to="/giaodich" activeStyle={{ fontWeight: "bold", color: "blue" }}>Giao dịch</NavLink >
           </li>
           <li>
-            <Link to="/nhacno" >Nhắc nợ</Link>
+            <NavLink  to="/nhacno" activeStyle={{ fontWeight: "bold", color: "blue" }}>Nhắc nợ</NavLink >
           </li>
+        </ul>
+        <ul className="nav navbar-nav navbar-right mgr-10">
+          <li><a><span className="glyphicon glyphicon-user"></span> {this.props.tendangnhap}</a></li>
+          <li><a href="/login"><span className="glyphicon glyphicon-log-in"></span>log out</a></li>
+          {/* <li><NavLink to="/home"><span className="glyphicon glyphicon-user"></span> {this.props.tendangnhap}</NavLink></li>
+          <li><NavLink to="/login" onClick={this.props.onLogin(false)}><span className="glyphicon glyphicon-log-in"></span>log out</NavLink></li> */}
         </ul>
       </div>
 

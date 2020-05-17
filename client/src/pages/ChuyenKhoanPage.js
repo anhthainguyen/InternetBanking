@@ -5,7 +5,9 @@ class ChuyenKhoanPage extends React.Component {
   render() {
     return (
       <div>
-        <Transfer/>
+        <Transfer
+          sotaikhoan={this.props.sotaikhoan}
+        />
       </div>
     )
   }

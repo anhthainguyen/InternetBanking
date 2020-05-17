@@ -11,20 +11,44 @@ import GiaoDichPage from '../pages/GiaoDichPage';
 import NhacNoPage from '../pages/NhacNoPage';
 
 class RouterMenu extends Component {
+
+    constructor(props) {
+        super(props);
+        this.state = {
+            id: this.props.id,
+            sotaikhoan: '',
+        };
+    }
+
+    setSoTaiKhoan = (params) => {
+        this.setState({ sotaikhoan: params })
+        console.log(this.state.sotaikhoan)
+    }
+
     render() {
         return (
             <Switch>
-                <Route exact path="/">
-                    <HomePage />
+                <Route exact path="/home">
+                    <HomePage
+                        id={this.state.id}
+                        sotaikhoan={this.state.sotaikhoan}
+                        onSoTaiKhoan={this.setSoTaiKhoan}
+                    />
                 </Route>
                 <Route path="/chuyekhoan">
-                    <ChuyenKhoanPage />
+                    <ChuyenKhoanPage
+                        sotaikhoan={this.state.sotaikhoan}
+                    />
                 </Route>
                 <Route path="/giaodich">
-                    <GiaoDichPage />
+                    <GiaoDichPage 
+                        sotaikhoan={this.state.sotaikhoan}
+                    />
                 </Route>
                 <Route path="/nhacno">
-                    <NhacNoPage />
+                    <NhacNoPage
+                        sotaikhoan={this.state.sotaikhoan}
+                    />
                 </Route>
             </Switch>
         );

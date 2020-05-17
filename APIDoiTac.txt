@@ -84,6 +84,7 @@ const data = {
 	"SoTaiKhoanN":"123456789",//Bên nhận API cộng tiền vào số tài khoản nhận
 	"NganHang":"___",//Tên ngân hàng gửi API
 	"SoTien":"100",//đơn vị VND
+	"NoiDung":"aaa",
 	"NgayGio":"2020-02-25 22:59:01"//Định dạng ngày giờ: YYYY-MM-DD HH:mm:ss
 };
 

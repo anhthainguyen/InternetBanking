@@ -6,8 +6,12 @@ class GiaoDichPage extends React.Component {
   render() {
     return (
       <div>
-        <TransactionSend/>
-        <TransactionsReceived/>
+        <TransactionSend
+          sotaikhoan={this.props.sotaikhoan}
+        />
+        <TransactionsReceived
+          sotaikhoan={this.props.sotaikhoan}
+        />
       </div>
     )
   }

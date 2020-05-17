@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import axios from 'axios';
-//import CallApi from '../utils/ApiCaller';
+// import axios from 'axios';
+import CallApi from '../utils/ApiCaller';
 
 class TransactionsReceived extends Component {
     constructor(props) {
@@ -9,21 +9,23 @@ class TransactionsReceived extends Component {
     }
     componentDidMount() {
         //var id = 123456789
-        axios({
-            method: 'GET',
-            url: 'http://localhost:4200/api/giaodich/SoTaiKhoanN/123456789',
-            data: null
+        // axios({
+        //     method: 'GET',
+        //     url: 'http://localhost:4200/api/giaodich/SoTaiKhoanN/123456789',
+        //     data: null
 
-        }).then(res => {
-            console.log(res);
-            this.setState({ users: res.data });
-        }).catch(err => {
-            console.log(err);
-        });
-        // CallApi('giaodich/SoTaiKhoanG/123456789', 'GET', null).then(res => {
+        // }).then(res => {
         //     console.log(res);
         //     this.setState({ users: res.data });
+        // }).catch(err => {
+        //     console.log(err);
         // });
+        if (this.props.sotaikhoan) {
+            CallApi('giaodich/SoTaiKhoanG/' + this.props.sotaikhoan, 'GET', null).then(res => {
+                console.log(res);
+                this.setState({ users: res.data });
+            });
+        }
     }
 
     renderTransactionsReceived = () => {

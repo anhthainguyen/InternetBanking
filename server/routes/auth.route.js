@@ -31,7 +31,8 @@ router.post('/', async (req, res) => {
   res.json({
     // authenticated: true,
     accessToken: token,
-    refreshToken: rfToken
+    refreshToken: rfToken,
+    data:ret
   })
 })
 

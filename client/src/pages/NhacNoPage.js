@@ -6,8 +6,12 @@ class NhacNoPage extends React.Component {
   render() {
     return (
       <div>
-        <CreateDebtReminder/>
-        <SeeDebtList/>
+        <CreateDebtReminder
+          sotaikhoan={this.props.sotaikhoan}
+        />
+        <SeeDebtList
+          sotaikhoan={this.props.sotaikhoan}
+        />
       </div>
     )
   }
