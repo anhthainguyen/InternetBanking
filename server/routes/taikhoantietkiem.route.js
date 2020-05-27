@@ -75,7 +75,7 @@ router.get('/:id', async (req, res) => {
 
 router.post('/add', async (req, res) => {
   try {
-    const results = await apModel.add(req.body);
+    const results = await apModel.add(req.body.data);
     const ret = {
       CatID: results.insertId,
       ...req.body
@@ -122,7 +122,7 @@ router.patch('/:id', async (req, res) => {
     throw createError(400, 'Invalid id.');
   }
 
-  const rs = await apModel.patch(req.params.id, req.body);
+  const rs = await apModel.patch(req.params.id, req.body.data);
   res.json(rs);
 })
 

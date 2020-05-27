@@ -79,7 +79,8 @@ class App extends React.Component {
     this.state = {
       id: '',
       tendangnhap: '',
-      login: false
+      login: false,
+      accessToken:''
     };
   }
 
@@ -96,6 +97,17 @@ class App extends React.Component {
     this.setState({ tendangnhap: params })
   }
 
+  setAccessToken = (params) => {
+    this.setState({ accessToken: params })
+    console.log(this.state.accessToken)
+  }
+
+  // setAccessToken = (params) => {
+  //   this.setState({ accessToken: params })
+  //   console.log(params)
+  //   console.log(this.setState.accessToken)
+  // }
+
   render() {
     
     // if (this.state.login) {
@@ -111,6 +123,7 @@ class App extends React.Component {
             <UserPage
               id={this.state.id}
               tendangnhap={this.state.tendangnhap}
+              accessToken={this.state.accessToken}
             />
           </Route>
           <Route path="/login" >
@@ -121,6 +134,7 @@ class App extends React.Component {
               onId={this.setId}
               onLogin={this.setLogin}
               onTenDangNhap={this.setTenDangNhap}
+              onAccessToken={this.setAccessToken}
             />
           </Route>
         </div>

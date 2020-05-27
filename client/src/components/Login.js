@@ -73,6 +73,7 @@ class Login extends React.Component {
           this.props.onId(res.data.data.idTKDangNhap)
           this.props.onTenDangNhap(res.data.data.TenDangNhap)
           this.props.onLogin(true)
+          this.props.onAccessToken(res.data.accessToken)
           //console.log(this.props.login)
           // this.setState({
           //   login: true
@@ -118,7 +119,7 @@ class Login extends React.Component {
                 type="text"
                 name="txtTenDangNhap"
                 className="form-control"
-                placeholder="Enter email"
+                placeholder="Tên đăng nhập"
                 onChange={this.onHandleChange}
               />
             </div>

@@ -7,7 +7,7 @@ class SeeDebtList extends Component {
 
     constructor(props) {
         super(props);
-        this.state = { users: [], isGoing: false, isGoing2: true };
+        this.state = { users: []};
     }
 
     componentDidMount() {
@@ -29,6 +29,9 @@ class SeeDebtList extends Component {
                 console.log(res);
                 this.setState({ users: res.data });
             });
+        }
+        else{
+            confirm('Bạn chưa đăng nhập')//eslint-disable-line
         }
     }
 
