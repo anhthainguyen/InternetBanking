@@ -2,7 +2,8 @@ import React from 'react';
 // import 'bootstrap/dist/css/bootstrap.min.css';
 import './Login.css';
 import CallApi from '../utils/ApiCaller';
-import { ReCaptcha } from 'react-recaptcha-google';
+//import { ReCaptcha } from 'react-recaptcha-google';
+import ReCAPTCHA from "react-google-recaptcha";
 import {
   // BrowserRouter as Router,
   // Route,
@@ -51,6 +52,10 @@ class Login extends React.Component {
     this.setState({
       [name]: value
     });
+  }
+
+  onChange = (value) => {
+    console.log("Captcha value:", value);
   }
 
   onHandleSubmit = (event) => {
@@ -150,13 +155,9 @@ class Login extends React.Component {
                 <label className="custom-control-label" htmlFor="customCheck1">Remember me</label>
               </div>
             </div>
-            <ReCaptcha
-              // ref={(el) => {this.captchaDemo = el;}}
-              size="normal"
-              render="explicit"
+            <ReCAPTCHA
               sitekey="6LfPHNQUAAAAALqSDV5Hc-gf9qiVQt0Ii9TTOPGK"
-            // onloadCallback={this.onLoadRecaptcha}
-            // verifyCallback={this.verifyCallback}
+              onChange={this.onChange}
             />
             <button type="submit" className="btn btn-primary btn-block" onClick={this.checkLogin}>Submit</button>
             <p className="forgot-password text-right">

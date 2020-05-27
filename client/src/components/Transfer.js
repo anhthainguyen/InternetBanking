@@ -234,6 +234,19 @@ class Transfer extends Component {
                     console.log(res)
                     if (res.status) {
                         console.log('vaotrong')
+                        const datahas = {
+                            soTKGui: this.props.sotaikhoan,
+                            soTKNhan: txtSoTaiKhoan,
+                            giaoDich: txtSoTien,
+                            timestamp: time,
+                            partnerCode: "1234",
+                            secretKey: 'Stay strong'
+                        }
+                        const text = JSON.stringify(datahas);
+                        //tạo checksum
+                        const checksum2 = CryptoJS.SHA256(text);
+                        console.log(checksum2)
+
                         const datanoptien = {
                             soTKGui: this.props.sotaikhoan,
                             soTKNhan: txtSoTaiKhoan,
@@ -241,15 +254,18 @@ class Transfer extends Component {
                             noiDung: txtNoiDung,
                             partnerCode: "1234",
                             timestamp: time,
-                            checksum: checksum.toString(CryptoJS.enc.Hex),
+                            checksum: checksum2.toString(CryptoJS.enc.Hex),
                             signature: sign
                         }
                         console.log(datanoptien)
                         axios({
                             method: 'post',
-                            url: 'https://student-ib.herokuapp.com/api/hkl/chuyenkhoan/noptien',
+                            url: 'http://192.168.43.162:3000/api/hkl/chuyenkhoan/noptien',
                             data: datanoptien
                         }).then(res => {
+                            if(res.status){
+                                confirm('Chuyển khoảng thành công.')//eslint-disable-line
+                            }
                             console.log(res);
                         }).catch(err => {
                             console.log(err);
@@ -262,13 +278,58 @@ class Transfer extends Component {
                 });
 
             } else if (txtnganhang === 'RSABank') {
-                // console.log('RSABank')
-                // var date = new Date();
-                // var sotk = "02180002324"
-                // var time = date.getFullYear().toString() + "0" + (date.getMonth() + 1).toString() + date.getDate().toString() + date.getHours().toString() + date.getMinutes().toString() + date.getSeconds().toString()
+                console.log('RSABank')
+                var date = new Date();
+                //var sotk = "02180002324"
+                var sotk = txtSoTaiKhoan
+                var time = date.getFullYear().toString() + "0" + (date.getMonth() + 1).toString() + date.getDate().toString() + date.getHours().toString() + date.getMinutes().toString() + date.getSeconds().toString()
 
-                // var stringhash = sotk + time + "nhom21"
-                // var bcrypt = require('bcrypt');
+                //var stringhash = sotk + time + "nhom21"
+
+
+                CallApi('auth/create-hash', 'POST', {
+                    soTaiKhoan: sotk,
+                    timer: time
+                }).then(res => {
+                    if (res.status === 200) {
+
+                        const data = {
+                            soTk: txtSoTaiKhoan,
+                            timer: time,
+                            hashCode: res.data.hashStr
+                        }
+                        console.log(data)
+                        axios({
+                            method: 'post',
+                            url: 'http://192.168.43.226:3000/api/ib-hn-gpg/info-account',
+                            data: data
+                        }).then(res => {
+                            if (res.status === 200) {
+                                const datanoptien = {
+                                    tenNganHangGui: "AKBank",
+                                    soTaiKhoanGui: this.props.sotaikhoan,
+                                    soTaiKhoanNhan: txtSoTaiKhoan,
+                                    tenNguoiNhan: "",
+                                    tenNguoiGui: "",
+                                    soTienChuyen: txtSoTien,
+                                    noiDung: txtNoiDung,
+                                    ngayTao: time,
+                                    signature: sign
+                                }
+                                console.log(datanoptien)
+                                axios({
+                                    method: 'post',
+                                    url: 'http://192.168.43.226:3000/api/ib-hn-gpg/payInto',
+                                    data: datanoptien
+                                }).then(res => {
+                                    console.log(res);
+                                });
+                            }
+                        });
+                    }
+                    console.log(res)
+                });
+                //var bcrypt = require('bcrypt');
                 // bcrypt.genSalt(12, function (err, salt, sotk, time) {
                 //     var sotk2=sotk;
                 //     var time2=time;
@@ -311,7 +372,7 @@ class Transfer extends Component {
         return (
             <div className="mg-10" method="POST" role="form">
                 <form id="myForm" onSubmit={this.onHandleSubmit} action="true">
-                    <legend>THÔNG TIN CHUYỂN KHOẢNG</legend>
+                    <legend>THÔNG TIN CHUYỂN KHOẢN</legend>
                     <div className="form-group">
                         <label htmlFor="true">Thông tin người nhận</label>
 
