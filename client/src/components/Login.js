@@ -2,7 +2,8 @@ import React from 'react';
 // import 'bootstrap/dist/css/bootstrap.min.css';
 import './Login.css';
 import CallApi from '../utils/ApiCaller';
-import { ReCaptcha } from 'react-recaptcha-google';
+// import { ReCaptcha } from 'react-recaptcha-google';
+import ReCAPTCHA from "react-google-recaptcha";
 import {
   // BrowserRouter as Router,
   // Route,
@@ -37,13 +38,34 @@ class Login extends React.Component {
   // }
 
   constructor(props) {
+    console.log("chay constructor");
     super(props);
+    this.onLoadRecaptcha = this.onLoadRecaptcha.bind(this);
+    this.verifyCallback = this.verifyCallback.bind(this);
     this.state = {
       txtTenDangNhap: '',
       txtMatKhau: '',
     };
   }
 
+  verifyCallback(recaptchaToken) {
+    // Here you will get the final recaptchaToken!!!  
+    console.log(recaptchaToken, "<= your recaptcha token")
+  }
+
+  onLoadRecaptcha() {
+    if (this.captchaDemo) {
+        this.captchaDemo.reset();
+    }
+  }
+
+  componentDidMount() {
+    if (this.captchaDemo) {
+        console.log("started, just a second...")
+        this.captchaDemo.reset();
+    }
+  }
+  
   onHandleChange = (event) => {
     var target = event.target;
     var name = target.name;
@@ -52,7 +74,9 @@ class Login extends React.Component {
       [name]: value
     });
   }
-
+  onChange = (value) => {
+    console.log("Captcha value:", value);
+  }
   onHandleSubmit = (event) => {
     event.preventDefault();
     var { txtTenDangNhap, txtMatKhau } = this.state;
@@ -140,14 +164,10 @@ class Login extends React.Component {
                 <label className="custom-control-label" htmlFor="customCheck1">Remember me</label>
               </div>
             </div>
-            <ReCaptcha
-              // ref={(el) => {this.captchaDemo = el;}}
-              size="normal"
-              render="explicit"
-              sitekey="6LfPHNQUAAAAALqSDV5Hc-gf9qiVQt0Ii9TTOPGK"
-            // onloadCallback={this.onLoadRecaptcha}
-            // verifyCallback={this.verifyCallback}
-            />
+            <ReCAPTCHA
+            sitekey="6LfPHNQUAAAAALqSDV5Hc-gf9qiVQt0Ii9TTOPGK"
+            onChange={this.onChange}
+          />
             <button type="submit" className="btn btn-primary btn-block" onClick={this.checkLogin}>Submit</button>
             <p className="forgot-password text-right">
               Forgot <a href="/forgotpassword">password?</a>
