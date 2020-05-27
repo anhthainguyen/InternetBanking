@@ -133,9 +133,12 @@ class Menu extends React.Component {
           <li>
             <NavLink  to="/nhacno" activeStyle={{ fontWeight: "bold", color: "blue" }}>Nhắc nợ</NavLink >
           </li>
+          <li>
+            <NavLink  to="/nguoinhan" activeStyle={{ fontWeight: "bold", color: "blue" }}>Người nhận</NavLink >
+          </li>
         </ul>
         <ul className="nav navbar-nav navbar-right mgr-10">
-          <li><a><span className="glyphicon glyphicon-user"></span> {this.props.tendangnhap}</a></li>
+          <li><a href="/home"><span className="glyphicon glyphicon-user"></span> {this.props.tendangnhap}</a></li>
           <li><a href="/login"><span className="glyphicon glyphicon-log-in"></span>log out</a></li>
           {/* <li><NavLink to="/home"><span className="glyphicon glyphicon-user"></span> {this.props.tendangnhap}</NavLink></li>
           <li><NavLink to="/login" onClick={this.props.onLogin(false)}><span className="glyphicon glyphicon-log-in"></span>log out</NavLink></li> */}

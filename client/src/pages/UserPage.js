@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { BrowserRouter as Router } from 'react-router-dom';
 import Menu from './../components/Menu'
 import RouterMenu from './../router/RouterMenu';
+//import routes from '../routes';
 
 class UserPage extends Component {
     constructor(props) {
@@ -9,7 +10,8 @@ class UserPage extends Component {
         this.state = {
             id: this.props.id,
             tendangnhap: this.props.tendangnhap,
-            login: this.props.login
+            login: this.props.login,
+            accessToken:this.props.accessToken
         };
     }
 
@@ -18,11 +20,16 @@ class UserPage extends Component {
     }
 
     // setHoVaTen = (params) => {
-    //     this.setState({ hovaten: params })
+    //     this.setState({ accessToken: params })
     // }
 
     setLogin = (params) => {
         this.setState({ login: params })
+    }
+
+    onHandleChange = (event) => {
+        console.log(this.props.accessToken)
+        console.log(this.state.id)
     }
 
     render() {
@@ -36,7 +43,12 @@ class UserPage extends Component {
                     />
                     <RouterMenu
                         id={this.state.id}
+                        accessToken={this.props.accessToken}
                     />
+                    {/* <routes
+                        id={this.state.id}
+                        accessToken={this.props.accessToken}
+                    /> */}
                 </div>
             </Router>
         );

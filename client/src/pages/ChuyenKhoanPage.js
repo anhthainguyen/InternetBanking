@@ -7,6 +7,8 @@ class ChuyenKhoanPage extends React.Component {
       <div>
         <Transfer
           sotaikhoan={this.props.sotaikhoan}
+          id={this.props.id}
+          accessToken={this.props.accessToken}
         />
       </div>
     )
