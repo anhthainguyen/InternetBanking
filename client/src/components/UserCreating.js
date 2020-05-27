@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import './Menu.css'
 import CallApi from '../utils/ApiCaller';
-const moment = require('moment');
+//const moment = require('moment');
 
 class UserCreating extends Component {
 
@@ -38,13 +38,14 @@ class UserCreating extends Component {
             confirm('Bạn chưa nhập mật khẩu.')//eslint-disable-line
         }
         else {
-            const now = moment().format("YYYY-MM-DD HH:mm:ss");
+            //const now = moment().format("YYYY-MM-DD HH:mm:ss");
             CallApi('tkdangnhap/add', 'POST', {
                 idTKDangNhap: txtIdTKDangNhap,
                 TenDangNhap: txtTenDangNhap,
                 MatKhau: txtMatKhau
             }).then(res => {
-                if (res.data) {
+                console.log(res)
+                if (res.status===201) {
                     confirm('Bạn đã tạo tài khoản thành công.')//eslint-disable-line
                     this.setState({
                         txtIdTKDangNhap: '',
@@ -85,7 +86,7 @@ class UserCreating extends Component {
                             className="form-control"
                             id="true"
                             placeholder="Nhập id tài khoản"
-                            name="txtSoTaiKhoan"
+                            name="txtIdTKDangNhap"
                             onChange={this.onHandleChange}
                         />
                     </div>
@@ -96,7 +97,7 @@ class UserCreating extends Component {
                             className="form-control"
                             id="true"
                             placeholder="Nhập tên đăng nhập"
-                            name="txtSoTien"
+                            name="txtTenDangNhap"
                             onChange={this.onHandleChange}
                         />
                     </div>
@@ -107,7 +108,7 @@ class UserCreating extends Component {
                             className="form-control"
                             id="true"
                             placeholder="Nhập mật khẩu tại đây"
-                            name="txtNoiDung"
+                            name="txtMatKhau"
                             onChange={this.onHandleChange}
                         />
                     </div>

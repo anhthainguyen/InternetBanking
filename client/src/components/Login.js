@@ -70,14 +70,18 @@ class Login extends React.Component {
       }).then(res => {
         if (res.data.accessToken) {
           console.log(res)
-          this.props.onId(res.data.data.idTKDangNhap)
-          this.props.onTenDangNhap(res.data.data.TenDangNhap)
-          this.props.onLogin(true)
-          this.props.onAccessToken(res.data.accessToken)
-          //console.log(this.props.login)
-          // this.setState({
-          //   login: true
-          // })
+          if (this.state.txtTenDangNhap === "Nhan Vien") {
+            this.props.onId(res.data.data.idTKDangNhap)
+            this.props.onTenDangNhap(res.data.data.TenDangNhap)
+            this.props.onPhanHeNV(true)
+            this.props.onAccessToken(res.data.accessToken)
+          } else {
+            console.log("vao được đây")
+            this.props.onId(res.data.data.idTKDangNhap)
+            this.props.onTenDangNhap(res.data.data.TenDangNhap)
+            this.props.onLogin(true)
+            this.props.onAccessToken(res.data.accessToken)
+          }
         } else {
           confirm('Tên đăng nhập hoặc password sai.')//eslint-disable-line
         }
@@ -106,6 +110,11 @@ class Login extends React.Component {
     if (this.props.login) {
       return (<Redirect to={'/home'} />);
     }
+
+    if (this.props.phanhenv) {
+      return (<Redirect to={'/phanhenv'} />);
+    }
+
 
     return (
       <div className="login">

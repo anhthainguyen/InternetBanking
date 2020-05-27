@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import './Menu.css'
 import CallApi from '../utils/ApiCaller';
-const moment = require('moment');
+//const moment = require('moment');
 
 class CustomerCreating extends Component {
     constructor(props) {
@@ -49,7 +49,7 @@ class CustomerCreating extends Component {
             confirm('Bạn chưa nhập số điện thoại.')//eslint-disable-line
         }
         else {
-            const now = moment().format("YYYY-MM-DD HH:mm:ss");
+            //const now = moment().format("YYYY-MM-DD HH:mm:ss");
             CallApi('khachhang/add', 'POST', {
                 idKhachHang: txtIdKhachHang,
                 HoVaTen: txtHoVaTen,
@@ -71,12 +71,14 @@ class CustomerCreating extends Component {
                     document.getElementById("myForm").reset();
                     console.log(res);
                 }
-                // this.setState({
-                //     "txtSoTaiKhoan":'',
-                //     "txtSoTien":'',
-                //     "txtNoiDung":'',
-                //     "txtnganhang":'AKBank'
-                // })
+                this.setState({
+                    txtIdKhachHang: '',
+                    txtHoVaTen: '',
+                    txtSoTaiKhoan: '',
+                    txtSoTien: '',
+                    txtEmail: '',
+                    txtSDT: ''
+                })
                 //eslint-disable-line
 
             });
@@ -105,7 +107,7 @@ class CustomerCreating extends Component {
                             className="form-control"
                             id="true"
                             placeholder="Nhập id tài khoản"
-                            name="txtSoTaiKhoan"
+                            name="txtIdKhachHang"
                             onChange={this.onHandleChange}
                         />
                     </div>
@@ -116,7 +118,7 @@ class CustomerCreating extends Component {
                             className="form-control"
                             id="true"
                             placeholder="Nhập tên đăng nhập"
-                            name="txtSoTien"
+                            name="txtHoVaTen"
                             onChange={this.onHandleChange}
                         />
                     </div>
@@ -127,7 +129,7 @@ class CustomerCreating extends Component {
                             className="form-control"
                             id="true"
                             placeholder="Nhập mật khẩu tại đây"
-                            name="txtNoiDung"
+                            name="txtSoTaiKhoan"
                             onChange={this.onHandleChange}
                         />
                     </div>
@@ -138,7 +140,7 @@ class CustomerCreating extends Component {
                             className="form-control"
                             id="true"
                             placeholder="Nhập mật khẩu tại đây"
-                            name="txtNoiDung"
+                            name="txtSoTien"
                             onChange={this.onHandleChange}
                         />
                     </div>
@@ -149,7 +151,7 @@ class CustomerCreating extends Component {
                             className="form-control"
                             id="true"
                             placeholder="Nhập mật khẩu tại đây"
-                            name="txtNoiDung"
+                            name="txtEmail"
                             onChange={this.onHandleChange}
                         />
                     </div>
@@ -160,7 +162,7 @@ class CustomerCreating extends Component {
                             className="form-control"
                             id="true"
                             placeholder="Nhập mật khẩu tại đây"
-                            name="txtNoiDung"
+                            name="txtSDT"
                             onChange={this.onHandleChange}
                         />
                     </div>                    

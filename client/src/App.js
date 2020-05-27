@@ -69,6 +69,7 @@ import { BrowserRouter as Router, Route } from 'react-router-dom';
 //import RouterMenu from './router/RouterMenu';
 import UserPage from './pages/UserPage';
 import Login from './components/Login';
+import PhanHeVN from './pages/PhanHeVN';
 // import Menu from './components/Menu';
 // import RouterMenu from './router/RouterMenu';
 
@@ -80,7 +81,8 @@ class App extends React.Component {
       id: '',
       tendangnhap: '',
       login: false,
-      accessToken:''
+      accessToken:'',
+      phanhenv: false
     };
   }
 
@@ -91,6 +93,10 @@ class App extends React.Component {
 
   setLogin = (params) => {
     this.setState({ login: params })
+  }
+
+  setPhanHeNV = (params) => {
+    this.setState({ phanhenv: params })
   }
 
   setTenDangNhap = (params) => {
@@ -131,6 +137,20 @@ class App extends React.Component {
               id={this.state.id}
               tendangnhap={this.state.tendangnhap}
               login={this.state.login}
+              phanhenv={this.state.phanhenv}
+              onId={this.setId}
+              onLogin={this.setLogin}
+              onPhanHeNV={this.setPhanHeNV}
+              onTenDangNhap={this.setTenDangNhap}
+              onAccessToken={this.setAccessToken}
+            />
+          </Route>
+          <Route path="/phanhenv" >
+            <PhanHeVN
+              id={this.state.id}
+              tendangnhap={this.state.tendangnhap}
+              login={this.state.login}
+              phanhenv={this.state.phanhenv}
               onId={this.setId}
               onLogin={this.setLogin}
               onTenDangNhap={this.setTenDangNhap}
